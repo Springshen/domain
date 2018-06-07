@@ -1,12 +1,6 @@
 <?php
 
-//$dm=array("Domain"=>"SINA.COM","Expiration"=>"2020-09-15T04:00:00Z","NameServer1"=>"NS1.SINA.COM","NameServer2" => "NS1.SINA.COM.CN");
-//print_r(json_encode($dm));
-//exit;
-
-
 $text = trim($_POST['domain']);
-//$text = 'sina.com';
 $textAr = explode("\n", $text);
 $textAr = array_filter($textAr, 'trim'); // remove any extra \r characters left behind
 
