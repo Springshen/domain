@@ -92,7 +92,7 @@ function validateForm()
 					createtbody(domainResult);
                 }
                 }
-                xmlhttp.open("POST","t.php"+'?t='+ Math.random(),true);
+                xmlhttp.open("POST","api.php"+'?t='+ Math.random(),true);
                 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xmlhttp.send('domain='+lastdomain);
 
