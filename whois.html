@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center   col-md-8 col-md-offset-2">域名批量查询</h1>
+	<form role="form" name="frm">
+        <div class="form-group   col-md-8 col-md-offset-2">
+            <label style="display:none;" for="Email1msg">With Bootstrap:</label>
+            <textarea class="form-control" rows="5" name="domain" id="dm" placeholder="请输入要查询的域名, 每行一个"></textarea>
+        </div>
+		<div class="form-group   col-md-8 col-md-offset-2"> 
+        <button type="button"  class="btn btn-info pull-right" onclick="validateForm()">查 询</button>
+		</div>
+	</form>
+
+
+	<!--Table-->
+    <table class="table">
+    
+        <!--Table head-->
+        <thead class="blue-grey lighten-4">
+            <tr>
+                <th>域名</th>
+				<th>过期时间</th>
+                <th>解析服务器1</th>
+                <th>解析服务器2</th>
+            </tr>
+        </thead>
+        <!--Table head-->
+    
+        <!--Table body-->
+        <tbody id="ajaxgetbody">
+            <!-- <tr><td>BAIDU.com</td><td>2026-10-11T11:05:17Z</td><td>DNS.BAIDU.COM</td><td>NS2.BAIDU.COM</td><td>OK</td></tr> -->
+        </tbody>
+        <!--Table body-->
+    
+    </table>
+</div>
+
+
+<script type="text/javascript">
+<!--
+
+
+
+var code = '';
+var div1 = document.getElementById('ajaxgetbody');
+
+
+
+
+
+function validateForm()
+{
+
+
+
+	//表单未填抛出提示
+    var x = document.forms["frm"]["domain"].value;
+    if (x == "") {
+        alert("域名不能为空");
+        return false;
+    }
+
+
+    //获取取textarea数据后，将数据按行循环输出
+    var lines = document.getElementById("dm").value.split('\n');
+    for(var i = 0;i < lines.length;i++){
+        if (!lines[i].length==0)     //过滤掉空行
+        {
+			var re = /^((http|https):\/\/)?([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-]+\.[a-zA-Z]{1,64}?$/gi;   //域名正则表达式
+			//alert(re.test(lines[i]));   //检测是否符合域名规范
+
+			if(re.test(lines[i]))     //有效域名处理
+			{
+				var lastdomain = lines[i].replace(/^((http:\/\/)|(https:\/\/))/ig, '');
+
+
+                let xmlhttp=new XMLHttpRequest();
+                xmlhttp.onreadystatechange=function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                	domainResult=JSON.parse(xmlhttp.responseText);  //转化成JSON格式  {"Domain":"SINA.COM","Expiration":"2020-09-15T04:00:00Z","NameServer1":"NS1.SINA.COM","NameServer2":"NS1.SINA.COM.CN"}
+					//console.log(domainResult);         //调试输出
+					createtbody(domainResult);
+                }
+                }
+                xmlhttp.open("POST","t.php"+'?t='+ Math.random(),true);
+                xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                xmlhttp.send('domain='+lastdomain);
+
+			} else {
+			    alert("域名不合法!");
+			}
+        }
+    }
+}
+
+
+
+
+
+function createtbody(domainResult)
+{
+	var domainjson = domainResult;
+	code += '<tr><td>'+domainjson.Domain+'</td><td>'+domainjson.Expiration+'</td><td>'+domainjson.NameServer1+'</td><td>'+domainjson.NameServer2+'</td></tr>';
+	div1.innerHTML = code;
+}
+
+
+
+//-->
+</script>
+
+
+</body>
+</html>
