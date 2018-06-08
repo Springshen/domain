@@ -1,6 +1,7 @@
 <?php
 
 $text = trim($_POST['domain']);
+//$text='badddddddddd665idu.com';  debug
 $textAr = explode("\n", $text);
 $textAr = array_filter($textAr, 'trim'); // remove any extra \r characters left behind
 
@@ -331,7 +332,7 @@ function ValidateIP($ip) {
 }
 
 function ValidateDomain($domain) {
-	if(!preg_match("/^([-a-z0-9]{2,100})\.([a-z\.]{2,8})$/i", $domain)) {
+	if(!preg_match("/^([-a-z0-9]{1,100})\.([a-z\.]{2,8})$/i", $domain)) {           //修复不能匹配单域名问题,如: g.cn,z.cn
 		return false;
 	}
 	return $domain;
@@ -387,8 +388,9 @@ foreach ($textAr as $domain) {
 
     $matches = array();
     preg_match("/(.*\bDomain Name\b.*)/", $result, $matches);
-    $domain_result['Domain'] = explode(":", $matches[0], 2)[1];
-    preg_match("/(.*\bRegistry Expiry Date\b.*)/", $result, $matches);
+    //$domain_result['Domain'] = explode(":", $matches[0], 2)[1];
+    $domain_result['Domain'] = trim($domain);       //写入域名，没有从result中获取，防止域名不存在丢失表单中的域名
+    preg_match("/(.*\bRegistry Expiry Date\b.*)|(.*\bExpiration Time\b.*)/", $result, $matches);    //增加多条件匹配。 com,cn域名获取日期时关键词不一样
     $domain_result['Expiration'] = trim(explode(":", $matches[0], 2)[1]);
     preg_match_all("/(.*\bName Server\b.*)/", $result, $matches);
     $domain_result['NameServer1'] = trim(explode(":", $matches[0][0])[1]);

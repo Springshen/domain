@@ -22,6 +22,7 @@
 	</form>
 
 
+
 	<!--Table-->
     <table class="table">
     
@@ -87,7 +88,7 @@ function validateForm()
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
 				    {
                 	    domainResult=JSON.parse(xmlhttp.responseText);  //转化成JSON格式  {"Domain":"SINA.COM","Expiration":"2020-09-15T04:00:00Z","NameServer1":"NS1.SINA.COM","NameServer2":"NS1.SINA.COM.CN"}
-					    //console.log(domainResult);                    //调试输出
+					    //console.log(domainResult);                      //调试输出
 					    createtbody(domainResult);                      //调用createtbody函数，将异步内容累加起来
 				    }
                 }
@@ -112,9 +113,8 @@ function createtbody(domainResult)
 {
 	var domainjson = domainResult;
 	code += '<tr><td>'+domainjson.Domain+'</td><td>'+domainjson.Expiration+'</td><td>'+domainjson.NameServer1+'</td><td>'+domainjson.NameServer2+'</td></tr>';
-	//document.write("<tr><td>11</td></tr>");
-	//document.write("<table><tr><td>Hello World!</td></tr></table>");
 	div1.innerHTML = code;
+	//document.write(code+'<br>');
 }
 
 //-->
