@@ -71,15 +71,20 @@ function validateForm()
 
     
     var lines = document.getElementById("dm").value.split('\n'); //获取取textarea数据后，将数据按行循环输出
+	//lines = lines.replace(/^\s+/,'').split('').reverse().join('').replace(/^\s+/,'').split('').reverse().join('');
     for(var i = 0;i < lines.length;i++){
         if (!lines[i].length==0)     //过滤掉空行
         {
 			var re = /^((http|https):\/\/)?([a-zA-Z0-9-]+\.){0,5}[a-zA-Z0-9-]+\.[a-zA-Z]{1,64}?$/gi;   //域名正则表达式
 			//alert(re.test(lines[i]));   //检测是否符合域名规范
 
-			if(re.test(lines[i]))      //有效域名处理
+
+			//var domain = lines[i].replace(/^\s+/,'').split('').reverse().join('').replace(/^\s+/,'').split('').reverse().join('');   //删除字符串左右空格
+			var domain = lines[i].trim();   //删除字符串左右空格
+
+			if(re.test(domain))      //检测是否符合域名规范,返回布尔值。对规范的域名处理
 			{
-				var lastdomain = lines[i].replace(/^((http:\/\/)|(https:\/\/))/ig, '');   //对输入的域名含有http, https进行删除
+				var lastdomain = domain.replace(/^((http:\/\/)|(https:\/\/))/ig, '');   //对输入的域名含有http, https进行删除
 
 
                 let xmlhttp=new XMLHttpRequest();
@@ -116,6 +121,7 @@ function createtbody(domainResult)
 	div1.innerHTML = code;
 	//document.write(code+'<br>');
 }
+
 
 //-->
 </script>
