@@ -332,7 +332,7 @@ function ValidateIP($ip) {
 }
 
 function ValidateDomain($domain) {
-	if(!preg_match("/^([-a-z0-9]{1,100})\.([a-z\.]{2,8})$/i", $domain)) {           //修复不能匹配单域名问题,如: g.cn,z.cn
+	if(!preg_match("/^([-a-z0-9]{1,100})\.([a-z\.]{2,24})$/i", $domain)) {           //修复不能匹配单域名问题,如: g.cn,z.cn
 		return false;
 	}
 	return $domain;
