@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-    <h1 class="text-center   col-md-8 col-md-offset-2">域名批量查询</h1>
+    <h1 class="text-center col-md-8 col-md-offset-2">域名批量查询</h1>
 	<form role="form" name="frm">
         <div class="form-group   col-md-8 col-md-offset-2">
             <label style="display:none;" for="Email1msg">With Bootstrap:</label>
@@ -33,6 +33,7 @@
 				<th>过期时间</th>
                 <th>解析服务器1</th>
                 <th>解析服务器2</th>
+                <th>WHOIS信息</th>
             </tr>
         </thead>
         <!--Table head-->
@@ -117,7 +118,7 @@ function validateForm()
 function createtbody(domainResult)
 {
 	var domainjson = domainResult;
-	code += '<tr><td>'+domainjson.Domain+'</td><td>'+domainjson.Expiration+'</td><td>'+domainjson.NameServer1+'</td><td>'+domainjson.NameServer2+'</td></tr>';
+	code += '<tr><td>'+domainjson.Domain+'</td><td>'+domainjson.Expiration+'</td><td>'+domainjson.NameServer1+'</td><td>'+domainjson.NameServer2+'</td><td><a href=\"https://whois.aliyun.com/whois/domain/'+domainjson.Domain+'\" target="_blank">WHOIS</a></td></tr>';
 	div1.innerHTML = code;
 	//document.write(code+'<br>');
 }
