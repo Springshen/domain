@@ -88,7 +88,7 @@ function validateForm()
 				var lastdomain = domain.replace(/^((http:\/\/)|(https:\/\/))/ig, '');   //对输入的域名含有http, https进行删除
 
 
-                let xmlhttp=new XMLHttpRequest();
+                let xmlhttp=new XMLHttpRequest();           //let 解决每次返回最后一个值的bug
                 xmlhttp.onreadystatechange=function() 
 				{
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
